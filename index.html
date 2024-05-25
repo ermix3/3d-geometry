@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+Project template for Assignment1
+It draws a cube on <canvas> using WebGL.
+Use it as a reference of your implementation of assignment1.
+You must use unobtrusive design, which is separating CSS and JS from HTML.
+Create separate files for your CSS and JS implementation.
+Note that inlined CSS/JS will be deducted.
+
+ AUTHOR: Song Ho Ahn (song.ahn@gmail.com)
+CREATED: 2024-05-08
+UPDATED: 2024-05-10
+-->
+
+    <head>
+        <title>Test Cube</title>
+
+        <meta charset="utf-8" />
+        <meta name="generator" content="EditPlus" />
+        <meta name="author" content="Song Ho Ahn" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/main.css" />
+
+        <!-- JS -->
+        <!-- load the required JS libs -->
+        <script src="js/webgl.js" defer></script>
+        <script src="js/Smal-0.96.min.js" defer></script>
+        <script src="js/Logger.min.js" defer></script>
+
+        <!-- load the custom JS -->
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+        <!-- flex block =========================================================== -->
+        <div class="flexblock">
+            <!-- col1 ================================================================= -->
+            <div class="leftblock">
+                <canvas id="webglview"> </canvas>
+                <div id="modelname">Model Name</div>
+            </div>
+            <!-- end of col1 ========================================================== -->
+
+            <!-- col2 ================================================================= -->
+            <div class="rightblock">
+                <label for="geometry-select">Select a geometry:</label>
+                <select id="geometry-select" style="width: 100%">
+                    <option value="cone">Cone</option>
+                    <option value="cylinder">Cylinder</option>
+                    <option value="sphere">Sphere</option>
+                    <option value="torus">Torus</option>
+                </select>
+
+                <!-- placeholder for UI =================================== -->
+                <div id="includeblock"></div>
+
+                <!-- common options ======================================= -->
+                <div class="optionblock">
+                    <label
+                        ><input type="checkbox" id="checkTexture" />Show
+                        Texture</label
+                    >
+                    <br />
+                    <label
+                        ><input type="checkbox" id="checkSmooth" />Smooth
+                        Shading</label
+                    >
+                    <br />
+                    <button type="reset" id="buttonReset">RESET CAMERA</button>
+                </div>
+                <!-- Copyright ======================================= -->
+                <div>&copy; 2024, Your Name</div>
+            </div>
+            <!-- end of col2 ========================================================== -->
+        </div>
+        <!-- end of flexblock ===================================================== -->
+    </body>
+</html>
