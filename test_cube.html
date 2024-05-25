@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+Project template for Assignment1
+It draws a cube on <canvas> using WebGL.
+Use it as a reference of your implementation of assignment1.
+You must use unobtrusive design, which is separating CSS and JS from HTML.
+Create separate files for your CSS and JS implementation.
+Note that inlined CSS/JS will be deducted.
+
+ AUTHOR: Song Ho Ahn (song.ahn@gmail.com)
+CREATED: 2024-05-08
+UPDATED: 2024-05-10
+-->
+
+<head>
+<title>Test Cube</title>
+
+<meta charset="utf-8">
+<meta name="generator" content="EditPlus">
+<meta name="author" content="Song Ho Ahn">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<!-- CSS -->
+<!-- NOTE: MUST put your CSS into a separate file, Otherwise deducted -->
+<style>
+body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    overflow:hidden;
+    font-family:"Arial", "Helvetica", sans-serif;
+    box-sizing:border-box;
+}
+
+.flexblock {
+    display:flex;
+    height:calc(100% - 20px);
+    gap:10px;
+    padding:10px;
+}
+.leftblock {
+    flex:1 1 auto;
+    position:relative;
+    background-color:#fdd;
+    border:1px solid #ccc;
+}
+.rightblock {
+    flex:0 0 300px;
+    background-color:#dfd;
+    overflow:auto;
+}
+
+/* inside leftbock */
+#webglview {
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    touch-action:none; /* prevent browser handle pointer events */
+}
+#modelname {
+    position:absolute;
+    left:10px;
+    top:10px;
+    font-size:1.5em;
+}
+
+/* inside rightblock */
+#includeblock {
+    margin:10px 0;
+    background-color:#ddf;
+}
+.optionblock {
+    margin:1em 0;
+}
+#buttonReset {
+    width:100%;
+    padding:0.2em;
+}
+.sliderflex {
+    display:flex;
+    align-items:center;
+}
+.slider {
+    flex:1 1 auto;
+}
+.slidervalue {
+    flex:0 0 2em;
+}
+
+</style>
+
+<!-- JS -->
+<!-- load the required JS libs -->
+<script src="js/webgl.js" defer></script>
+<script src="js/Smal-0.96.min.js" defer></script>
+<script src="js/Logger.min.js" defer></script>
+
+<!-- NOTE: MUST implement your JS code in a separate file, otherwise deducted -->
+<script>
+///////////////////////////////////////////////////////////////////////////////
+// main entry point: execute after DOM is ready
+document.addEventListener("DOMContentLoaded", () =>
+{
+    // 1. init webgl with your canvas ID
+    // then, use "gl" global object to manipulate the 3D content
+    initWebGL("webglview");
+
+    // 2. create a cube geometry to draw
+    // params: (gl, radius, subdivision, smooth)
+    gl.model = new Smal.Cubesphere(gl, 1, 0, false); // radius=1, subdivision=0, smooth=false
+    // re-adjust the side length of cube
+    gl.model.setSideLength(1); // this line is only for cube geometry
+    log(gl.model);  // debug
+
+    // 3. init DOM elements & events
+    initControls();
+
+    // 4. include html & js into the page dynamically
+    let uiDiv = document.getElementById("includeblock");
+    includeHtml("includeblock", "html/ui_cube.html", "js/ui_cube.js");
+});
+
+
+///////////////////////////////////////////////////////////////////////////////
+function initControls()
+{
+    let checkTexture = document.getElementById("checkTexture");
+    checkTexture.checked = true;
+    checkTexture.addEventListener("click", () => gl.textureEnabled = checkTexture.checked);
+
+    let checkSmooth = document.getElementById("checkSmooth");
+    checkSmooth.checked = false;
+    checkSmooth.addEventListener("click", () =>
+    {
+        gl.smooth = checkSmooth.checked;
+        gl.model.setSmooth(gl.smooth);
+    });
+
+    let buttonReset = document.getElementById("buttonReset");
+    buttonReset.addEventListener("click", () => resetCamera());
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// dynamically add html and js
+// PARAMS: domId: the container DOM ID
+//         html : URL to html file
+//         js   : URL to js file
+function includeHtml(domId, html, js)
+{
+    fetch(html)
+    .then(response => response.text())
+    .then(text =>
+    {
+        // success
+        log("loaded HTML: " + html);
+        let dom = document.getElementById(domId);
+        dom.innerHTML = text;
+        // load JS after html is loaded
+        loadJavaScript(js);
+        // resize canvas manually because page was updated
+        handleResize();
+    })
+    .catch(e =>
+    {
+        // failed
+        console.log("Failed to load " + html);
+    });
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+function loadJavaScript(file)
+{
+    if(!file)
+        return;
+
+    let jsId = btoa(file);  // encode to base64 string
+    let script = document.createElement("script");
+    script.id = jsId;
+
+    // add script to dom
+    if(!document.getElementById("jsId"))
+        document.head.appendChild(script);
+
+    // callback onload
+    script.onload = () =>
+    {
+        // parsing JS is completed, safe to execute it here
+        log("loaded JS: " + file);
+    };
+    // callback onerror
+    script.onerror = e => console.log(e);
+
+    // start to load
+    script.src = file;
+}
+</script>
+
+</head>
+
+
+<body>
+
+<!-- flex block =========================================================== -->
+<div class="flexblock">
+
+<!-- col1 ================================================================= -->
+<div class="leftblock">
+<canvas id="webglview">
+</canvas>
+<div id="modelname">
+Model Name
+</div>
+</div>
+<!-- end of col1 ========================================================== -->
+
+
+<!-- col2 ================================================================= -->
+<div class="rightblock">
+
+<p style="color:#f00;">
+This is the template for the assignment1. Please use it as a reference only and create your own HTML, JavaScrit and CSS files by modifying and adding your codes.
+</p>
+<p style="color:#f00;">
+You may see <b>CORS</b> (Cross Origin Resource Sharing) errors when you run it on your computer. Please use <b>LiveServer</b> on VS Code to test it.
+</p>
+
+<!-- placeholder for UI =================================== -->
+<div id="includeblock">
+</div>
+
+<!-- common options ======================================= -->
+<div class="optionblock">
+<label><input type="checkbox" id="checkTexture">Show Texture</label>
+<br>
+<label><input type="checkbox" id="checkSmooth">Smooth Shading</label>
+<br>
+<button type="reset" id="buttonReset">RESET CAMERA</button>
+</div>
+
+</div>
+<!-- end of col2 ========================================================== -->
+
+
+</div>
+<!-- end of flexblock ===================================================== -->
+
+</body>
+</html>
