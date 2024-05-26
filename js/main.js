@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Initialize with the default geometry
-    document.getElementById('geometry-select').value = 'sphere';
-    document.getElementById('modelname').textContent = 'sphere';
+    document.getElementById('geometry-select').value = 'Sphere';
+    document.getElementById('modelname').textContent = 'Sphere';
     includeHtml("includeblock", "html/sphere.html", "js/sphere.js");
 });
 
