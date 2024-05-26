@@ -13,14 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   geometrySelect.addEventListener("change", () => {
     const selectedGeometry = geometrySelect.value;
-    document.getElementById('modelname').textContent = selectedGeometry;
-    includeHtml("includeblock", `html/${selectedGeometry.toLowerCase()}.html`,
-                `js/${selectedGeometry.toLowerCase()}.js`);
+    document.getElementById("modelname").textContent = selectedGeometry;
+    includeHtml(
+      "includeblock",
+      `html/${selectedGeometry.toLowerCase()}.html`,
+      `js/${selectedGeometry.toLowerCase()}.js`,
+    );
   });
 
   // Initialize with the default geometry
-  document.getElementById('geometry-select').value = 'Sphere';
-  document.getElementById('modelname').textContent = 'Sphere';
+  document.getElementById("geometry-select").value = "Sphere";
+  document.getElementById("modelname").textContent = "Sphere";
   includeHtml("includeblock", "html/sphere.html", "js/sphere.js");
 });
 
@@ -29,7 +32,9 @@ function initControls() {
   let checkTexture = document.getElementById("checkTexture");
   checkTexture.checked = true;
   checkTexture.addEventListener(
-      "click", () => (gl.textureEnabled = checkTexture.checked));
+    "click",
+    () => (gl.textureEnabled = checkTexture.checked),
+  );
 
   let checkSmooth = document.getElementById("checkSmooth");
   checkSmooth.checked = false;
@@ -49,35 +54,33 @@ function initControls() {
 //         js   : URL to js file
 function includeHtml(domId, html, js) {
   fetch(html)
-      .then((response) => response.text())
-      .then((text) => {
-        // success
-        log("loaded HTML: " + html);
-        let dom = document.getElementById(domId);
-        dom.innerHTML = text;
-        // load JS after html is loaded
-        loadJavaScript(js);
-        // resize canvas manually because page was updated
-        handleResize();
-      })
-      .catch((e) => {
-        // failed
-        console.log("Failed to load " + html);
-      });
+    .then((response) => response.text())
+    .then((text) => {
+      // success
+      log("loaded HTML: " + html);
+      let dom = document.getElementById(domId);
+      dom.innerHTML = text;
+      // load JS after html is loaded
+      loadJavaScript(js);
+      // resize canvas manually because page was updated
+      handleResize();
+    })
+    .catch((e) => {
+      // failed
+      console.log("Failed to load " + html);
+    });
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 function loadJavaScript(file) {
-  if (!file)
-    return;
+  if (!file) return;
 
   let jsId = btoa(file); // encode to base64 string
   let script = document.createElement("script");
   script.id = jsId;
 
   // add script to dom
-  if (!document.getElementById("jsId"))
-    document.head.appendChild(script);
+  if (!document.getElementById("jsId")) document.head.appendChild(script);
 
   // callback onload
   script.onload = () => {
