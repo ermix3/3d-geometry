@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('modelname').textContent = selectedGeometry;
         includeHtml(
             "includeblock",
-            `html/${selectedGeometry}.html`,
-            `js/${selectedGeometry}.js`
+            `html/${selectedGeometry.toLowerCase()}.html`,
+            `js/${selectedGeometry.toLowerCase()}.js`
         );
     });
 
