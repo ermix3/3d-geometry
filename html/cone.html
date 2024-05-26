@@ -1,7 +1,7 @@
 <!-- UI constrols for cone geometry -->
-<div>
+<!-- <div>
     <label
-        >Base Radius:
+        >Base Radius: <br/>
         <input
             type="range"
             class="slider"
@@ -13,7 +13,7 @@
     /></label>
     <br />
     <label
-        >Height:
+        >Height: <br/>
         <input
             type="range"
             class="slider"
@@ -25,7 +25,7 @@
     /></label>
     <br />
     <label
-        >Sector Count:
+        >Sector Count: <br/>
         <input
             type="range"
             class="slider"
@@ -37,7 +37,7 @@
     /></label>
     <br />
     <label
-        >Stack Count:
+        >Stack Count: <br/>
         <input
             type="range"
             class="slider"
@@ -47,4 +47,59 @@
             max="100"
             step="1"
     /></label>
+</div> -->
+
+
+<div>
+    <label>
+        Base Radius: <span id="cone-base-radius-value">1</span><br/>
+        <input
+            type="range"
+            class="slider"
+            id="cone-base-radius"
+            value="1"
+            min="0.1"
+            max="5"
+            step="0.1"
+        />
+    </label>
+    <br />
+    <label>
+        Height: <span id="cone-height-value">2</span><br/>
+        <input
+            type="range"
+            class="slider"
+            id="cone-height"
+            value="2"
+            min="0"
+            max="5"
+            step="0.1"
+        />
+    </label>
+    <br />
+    <label>
+        Sector Count: <span id="cone-sectors-value">36</span><br/>
+        <input
+            type="range"
+            class="slider"
+            id="cone-sectors"
+            value="36"
+            min="3"
+            max="100"
+            step="1"
+        />
+    </label>
+    <br />
+    <label>
+        Stack Count: <span id="cone-stacks-value">1</span><br/>
+        <input
+            type="range"
+            class="slider"
+            id="cone-stacks"
+            value="1"
+            min="1"
+            max="100"
+            step="1"
+        />
+    </label>
 </div>
